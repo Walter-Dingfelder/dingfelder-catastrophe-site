@@ -385,8 +385,8 @@ a:focus {
   }
 
   .hero-copy h1 {
-    font-size: clamp(2.2rem, 9vw, 4rem);
-    line-height: 0.94;
+    font-size: clamp(1.9rem, 7.4vw, 3.2rem);
+    line-height: 0.96;
     max-width: none;
   }
 
@@ -398,7 +398,7 @@ a:focus {
 @media (max-width: 720px) {
   .cat-page { padding-top: 18px; }
   .hero-copy, .hero-visual, .audience, .definition, .how, .capabilities, .form-section { padding: 22px; }
-  .hero-copy h1 { font-size: clamp(2rem, 12vw, 3.2rem); }
+  .hero-copy h1 { font-size: clamp(1.8rem, 7vw, 3rem); line-height: 0.97; }
   .lede { font-size: 1.04rem; }
   .cap-card { grid-template-columns: 1fr; }
   .cap-card img { width: 100%; height: auto; max-height: 220px; }
