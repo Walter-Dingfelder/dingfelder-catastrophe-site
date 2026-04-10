@@ -134,7 +134,7 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 
-.audience, .how, .capabilities, .form-section {
+.audience, .definition, .how, .capabilities, .form-section {
   margin-top: 28px;
   padding: 34px;
 }
@@ -178,6 +178,40 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--stroke);
 }
 .audience-panel p { margin: 0; }
+
+
+.definition {
+  margin-top: 28px;
+  padding: 34px;
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+.definition-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 16px;
+}
+.panel-card {
+  border-radius: 18px;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,0.03);
+  padding: 22px;
+}
+.definition-copy p + p { margin-top: 1rem; }
+.definition-list h3 {
+  margin: 0 0 0.9rem;
+  font-size: 1.08rem;
+}
+.definition-list ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #eef4f8;
+  line-height: 1.7;
+}
+.definition-list li + li { margin-top: 0.4rem; }
 
 .steps {
   display: grid;
@@ -303,9 +337,15 @@ a:focus {
 
 @media (max-width: 720px) {
   .cat-page { padding-top: 18px; }
-  .hero-copy, .hero-visual, .audience, .how, .capabilities, .form-section { padding: 22px; }
+  .hero-copy, .hero-visual, .audience, .definition, .how, .capabilities, .form-section { padding: 22px; }
   .hero-copy h1 { font-size: clamp(2rem, 12vw, 3.2rem); }
   .lede { font-size: 1.04rem; }
   .cap-card { grid-template-columns: 1fr; }
   .cap-card img { width: 100%; height: auto; max-height: 220px; }
+}
+
+@media (max-width: 980px) {
+  .definition-grid {
+    grid-template-columns: 1fr;
+  }
 }
