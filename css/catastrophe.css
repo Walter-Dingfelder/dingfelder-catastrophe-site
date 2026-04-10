@@ -381,26 +381,29 @@ a:focus {
   }
 
   .hero-copy {
-    padding: 34px 24px 30px;
+    padding: 34px 28px 30px;
   }
 
   .hero-copy h1 {
-    font-size: clamp(1.65rem, 6.3vw, 2.7rem);
-    line-height: 0.98;
-    letter-spacing: -0.035em;
+    font-size: clamp(2.2rem, 9vw, 4rem);
+    line-height: 0.94;
     max-width: none;
   }
 
   .lede {
-    font-size: 1.04rem;
+    font-size: 1.08rem;
   }
 }
 
 @media (max-width: 720px) {
   .cat-page { padding-top: 18px; }
   .hero-copy, .hero-visual, .audience, .definition, .how, .capabilities, .form-section { padding: 22px; }
-  .hero-copy h1 { font-size: clamp(1.8rem, 7vw, 3rem); line-height: 0.97; }
-  .lede { font-size: 1.04rem; }
+  .hero-copy h1 {
+    font-size: clamp(1.45rem, 5.9vw, 2.25rem);
+    line-height: 1.01;
+    letter-spacing: -0.03em;
+  }
+  .lede { font-size: 1rem; }
   .cap-card { grid-template-columns: 1fr; }
   .cap-card img { width: 100%; height: auto; max-height: 220px; }
 }
