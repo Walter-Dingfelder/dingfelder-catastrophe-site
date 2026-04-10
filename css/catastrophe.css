@@ -189,6 +189,23 @@ img { max-width: 100%; display: block; }
   box-shadow: var(--shadow);
   backdrop-filter: blur(8px);
 }
+.definition {
+  position: relative;
+  overflow: hidden;
+}
+.definition::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(245,159,40,0.08), transparent 22%),
+    radial-gradient(circle at top right, rgba(111,211,255,0.07), transparent 24%);
+  pointer-events: none;
+}
+.definition > * {
+  position: relative;
+  z-index: 1;
+}
 .definition-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -201,17 +218,35 @@ img { max-width: 100%; display: block; }
   padding: 22px;
 }
 .definition-copy p + p { margin-top: 1rem; }
+.definition-copy strong {
+  color: var(--gold);
+}
 .definition-list h3 {
   margin: 0 0 0.9rem;
   font-size: 1.08rem;
+  color: #fff4db;
 }
 .definition-list ul {
   margin: 0;
   padding-left: 1.2rem;
   color: #eef4f8;
-  line-height: 1.7;
+  line-height: 1.75;
+}
+.definition-list li::marker {
+  color: var(--gold);
+}
+.definition-list li strong,
+.safety-highlight {
+  color: var(--gold);
+  font-weight: 700;
 }
 .definition-list li + li { margin-top: 0.4rem; }
+
+.catastrophe-bridge {
+  font-size: 1.05rem;
+  line-height: 1.78;
+  color: #eaf0f6;
+}
 
 .steps {
   display: grid;
@@ -251,7 +286,7 @@ img { max-width: 100%; display: block; }
   gap: 16px;
 }
 .cap-card {
-  padding: 18px;
+  padding: 20px;
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: 18px;
@@ -267,13 +302,18 @@ img { max-width: 100%; display: block; }
 }
 .cap-card label,
 .checkbox-inline {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 0.97rem;
-  line-height: 1.55;
-  color: #eef4f8;
-  margin-top: 12px;
+  display: block;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(123, 154, 181, 0.14);
+  color: #f4f7fb;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.cap-card input[type="checkbox"] {
+  transform: translateY(1px);
+  margin-right: 8px;
+  accent-color: var(--gold);
 }
 .cap-card-text {
   grid-template-columns: 1fr;
@@ -331,8 +371,28 @@ a:focus {
 }
 
 @media (max-width: 1040px) {
-  .hero { grid-template-columns: 1fr; }
   .steps, .cards, .form-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .hero-copy {
+    padding: 34px 28px 30px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(2.2rem, 9vw, 4rem);
+    line-height: 0.94;
+    max-width: none;
+  }
+
+  .lede {
+    font-size: 1.08rem;
+  }
 }
 
 @media (max-width: 720px) {
