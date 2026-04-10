@@ -378,22 +378,22 @@ a:focus {
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
   }
 
   .hero-copy {
-    padding: 34px 24px 30px;
+    padding: 30px 18px 26px;
   }
 
   .hero-copy h1 {
-    font-size: clamp(1.55rem, 5.8vw, 2.4rem);
-    line-height: 1;
+    font-size: clamp(1.48rem, 5.2vw, 2.15rem);
+    line-height: 0.98;
     letter-spacing: -0.03em;
     max-width: none;
   }
 
   .lede {
-    font-size: 1.04rem;
+    font-size: 1.02rem;
   }
 }
 
