@@ -1,0 +1,596 @@
+<section id="fortune-audio-section" class="ft-audio-wrap ft-mode-human"> 
+  <style>
+    .ft-audio-wrap{
+      background:#05070b;
+      color:#e6ebf4;
+      padding:60px 8%;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      overflow-x:hidden;
+      overflow-y:visible;
+    }
+
+    .ft-audio-layout{
+      display:flex;
+      flex-wrap:wrap;
+      gap:40px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+
+    .ft-audio-text{
+      flex:1 1 320px;
+      max-width:640px;
+      line-height:1.6;
+    }
+
+    .ft-audio-text h2{
+      font-size:32px;
+      margin:0 0 10px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:#fbbf24;
+    }
+
+    .ft-audio-text h3{
+      font-size:18px;
+      margin:0 0 18px;
+      color:#9ca3af;
+      font-weight:500;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+
+    .ft-audio-text p{
+      margin:0 0 14px;
+      font-size:15px;
+      color:#e5e7eb;
+    }
+
+    .ft-audio-text ul{
+      margin:10px 0 18px 1.1em;
+      padding:0;
+      font-size:14px;
+      list-style:disc;
+    }
+
+    .ft-audio-text li{
+      margin-bottom:6px;
+    }
+
+    .ft-audio-highlight{
+      color:#fbbf24;
+      font-weight:600;
+    }
+
+    /* ==== TOGGLE PILL ==== */
+    .ft-audio-toggle{
+      display:inline-flex;
+      align-items:center;
+      background:#02131a;
+      border-radius:999px;
+      padding:3px;
+      border:1px solid #064052;
+      margin:4px 0 10px;
+    }
+
+    .ft-audio-toggle button{
+      border:none;
+      background:transparent;
+      color:#9ca3af;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      padding:6px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      transition:all .25s ease;
+    }
+
+    .ft-audio-toggle button.ft-active{
+      color:#e5f9f7;
+    }
+
+    /* Laser glow animations for buttons */
+    @keyframes human-glow {
+      0% {
+        background:#0f9d4a;
+        box-shadow:0 0 4px rgba(34,197,94,.7), 0 0 12px rgba(34,197,94,.8);
+      }
+      50% {
+        background:#22ff6f;
+        box-shadow:0 0 14px rgba(34,255,111,1), 0 0 28px rgba(34,255,111,.9);
+      }
+      100% {
+        background:#0f9d4a;
+        box-shadow:0 0 4px rgba(34,197,94,.7), 0 0 12px rgba(34,197,94,.8);
+      }
+    }
+
+    @keyframes ultra-glow {
+      0% {
+        background:#0ea5e9;
+        box-shadow:0 0 4px rgba(14,165,233,.6), 0 0 10px rgba(14,165,233,.7);
+      }
+      33% {
+        background:#00e5ff;
+        box-shadow:0 0 18px rgba(0,229,255,1), 0 0 36px rgba(0,229,255,.9);
+      }
+      66% {
+        background:#38bdf8;
+        box-shadow:0 0 22px rgba(56,189,248,1), 0 0 42px rgba(56,189,248,.85);
+      }
+      100% {
+        background:#0ea5e9;
+        box-shadow:0 0 4px rgba(14,165,233,.6), 0 0 10px rgba(14,165,233,.7);
+      }
+    }
+
+    .ft-color-slow.ft-active{
+      animation:human-glow 2.8s ease-in-out infinite;
+    }
+
+    .ft-color-fast.ft-active{
+      animation:ultra-glow 1.2s ease-in-out infinite;
+    }
+
+    /* Info panels */
+    .ft-audio-panel{
+      font-size:13px;
+      line-height:1.5;
+      background:#021016;
+      border-radius:10px;
+      border:1px solid #113646;
+      padding:10px 12px;
+      margin-bottom:14px;
+    }
+
+    .ft-audio-panel strong{
+      color:#fbbf24;
+    }
+
+    .ft-audio-panel-hidden{
+      display:none;
+    }
+
+    /* Video side */
+    .ft-audio-video{
+      flex:1 1 320px;
+      max-width:520px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .ft-audio-video-inner{
+      width:100%;
+    }
+
+    .ft-audio-video video{
+      width:100%;
+      max-width:520px;
+      border-radius:14px;
+      border:1px solid #1f2933;
+      box-shadow:0 18px 40px rgba(0,0,0,.65);
+      background:#000;
+      display:block;
+    }
+
+    .ft-audio-caption{
+      margin-top:12px; /* text describing the video */
+      font-size:12px;
+      color:#9ca3af;
+      text-align:center;
+    }
+
+    /* === Spectrum strip: now inline BELOW caption === */
+    .ft-spectrum-strip{
+      margin:10px auto 0;           /* sits between caption & fault panel */
+      width:86%;
+      max-width:420px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(to right,#022c22,#1e293b,#020617);
+      border:1px solid rgba(148,163,184,.6);
+      overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.75);
+      display:flex;
+    }
+
+    .ft-spectrum-band-btn{
+      flex:1 1 0;
+      border:none;
+      padding:0;
+      margin:0;
+      background:transparent;
+      position:relative;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      align-items:center;
+      overflow:hidden;
+    }
+
+    .ft-spectrum-band-btn:focus{
+      outline:none;
+    }
+
+    .ft-spectrum-bars{
+      position:absolute;
+      bottom:10px;
+      left:0;
+      right:0;
+      height:28px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-evenly;
+      pointer-events:none;
+    }
+
+    .ft-spectrum-bar{
+      width:4px;
+      height:100%;
+      min-height:16px;
+      border-radius:999px;
+      transform-origin:bottom center;
+      opacity:.85;
+    }
+
+    /* Base colors for bars */
+    .ft-band-human .ft-spectrum-bar{
+      background:linear-gradient(to top,#16a34a,#bbf7d0);
+    }
+
+    .ft-band-mid .ft-spectrum-bar{
+      background:linear-gradient(to top,#f59e0b,#facc15);
+    }
+
+    .ft-band-ultra .ft-spectrum-bar{
+      background:linear-gradient(to top,#0ea5e9,#a5f3fc);
+    }
+
+    /* Bar animations – rise/fall like acoustic energy */
+    @keyframes band-human-energy{
+      0%{ transform:scaleY(0.25); }
+      25%{ transform:scaleY(0.6); }
+      50%{ transform:scaleY(0.9); }
+      75%{ transform:scaleY(0.45); }
+      100%{ transform:scaleY(0.25); }
+    }
+
+    @keyframes band-mid-energy{
+      0%{ transform:scaleY(0.2); }
+      25%{ transform:scaleY(0.7); }
+      50%{ transform:scaleY(1.1); }
+      75%{ transform:scaleY(0.5); }
+      100%{ transform:scaleY(0.2); }
+    }
+
+    @keyframes band-ultra-energy{
+      0%{ transform:scaleY(0.3); }
+      25%{ transform:scaleY(1.0); }
+      50%{ transform:scaleY(1.4); }
+      75%{ transform:scaleY(0.7); }
+      100%{ transform:scaleY(0.3); }
+    }
+
+    .ft-band-human .ft-spectrum-bar{
+      animation:band-human-energy 2.9s ease-in-out infinite;
+    }
+
+    .ft-band-mid .ft-spectrum-bar{
+      animation:band-mid-energy 3.6s ease-in-out infinite;
+    }
+
+    .ft-band-ultra .ft-spectrum-bar{
+      animation:band-ultra-energy 2.1s ease-in-out infinite;
+    }
+
+    /* Slight randomization via delays */
+    .ft-spectrum-bar:nth-child(1){ animation-delay:-0.2s; }
+    .ft-spectrum-bar:nth-child(2){ animation-delay:-0.7s; }
+    .ft-spectrum-bar:nth-child(3){ animation-delay:-1.4s; }
+    .ft-spectrum-bar:nth-child(4){ animation-delay:-0.9s; }
+    .ft-spectrum-bar:nth-child(5){ animation-delay:-1.8s; }
+
+    .ft-spectrum-label{
+      position:absolute;
+      bottom:2px;
+      font-size:8px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#cbd5f5;
+      opacity:.85;
+      pointer-events:none;
+    }
+
+    /* Dim / brighten bands by mode */
+    .ft-mode-human .ft-band-human{
+      filter:brightness(1.4);
+    }
+    .ft-mode-human .ft-band-mid{
+      filter:brightness(1);
+    }
+    .ft-mode-human .ft-band-ultra{
+      filter:brightness(.45);
+      opacity:.7;
+    }
+
+    .ft-mode-ultra .ft-band-ultra{
+      filter:brightness(1.5);
+    }
+    .ft-mode-ultra .ft-band-mid{
+      filter:brightness(1.05);
+    }
+    .ft-mode-ultra .ft-band-human{
+      filter:brightness(.45);
+      opacity:.7;
+    }
+
+    /* Fault examples panel */
+    .ft-fault-panel{
+      margin-top:10px;
+      font-size:12px;
+      line-height:1.5;
+      background:#020b12;
+      border-radius:10px;
+      border:1px solid #1e293b;
+      padding:8px 10px;
+      color:#cbd5f5;
+      position:relative;
+    }
+
+    .ft-fault-panel strong{
+      color:#fbbf24;
+    }
+
+    @media (max-width:768px){
+      .ft-audio-wrap{
+        padding:40px 6%;
+      }
+      .ft-audio-text h2{
+        font-size:26px;
+      }
+      .ft-audio-layout{
+        flex-direction:column;
+      }
+    }
+  </style>
+
+  <div class="ft-audio-layout">
+    <!-- LEFT: TEXT + TOGGLE -->
+    <div class="ft-audio-text">
+      <h3>Furnace Doctor™ · Fortune Teller™ Audio Vault</h3>
+      <h2>Why 40&nbsp;kHz Matters</h2>
+
+      <p>
+        Most people only hear up to about <span class="ft-audio-highlight">20&nbsp;kHz</span>.
+        Your coreless induction furnace doesn’t care about that limit. Its earliest warning signs
+        live in the <span class="ft-audio-highlight">ultrasonic band</span>, long before a human ear
+        or handheld meter notices anything is wrong.
+      </p>
+
+      <p>
+        Fortune Teller™ listens to the full acoustic fingerprint of the melt — from deep coil hum
+        to ultrasonic stress crackle — and indexes every pattern into the V.A.U.L.T™ for
+        Predictive Breakpoint™ analysis.
+      </p>
+
+      <p><strong>Typical fault signatures and where they first appear:</strong></p>
+      <ul>
+        <li><strong>Coil hot-spot discharge:</strong> ~28–32&nbsp;kHz</li>
+        <li><strong>Molten metal flash arc:</strong> ~30–40&nbsp;kHz</li>
+        <li><strong>Micro refractory crack:</strong> ~24–30&nbsp;kHz</li>
+        <li><strong>Cavitation ping (cooling circuit):</strong> ~22–28&nbsp;kHz</li>
+        <li><strong>Water leak hiss (steam / jacket breach):</strong> ~16–24&nbsp;kHz</li>
+      </ul>
+
+      <!-- Toggle -->
+      <div class="ft-audio-toggle" aria-label="Audio range comparison">
+        <button type="button" id="ft-toggle-human" class="ft-active ft-color-slow">
+          Human Hearing
+        </button>
+        <button type="button" id="ft-toggle-ultra" class="ft-color-fast">
+          Ultrasonic Zone
+        </button>
+      </div>
+
+      <!-- Info panels -->
+      <div id="ft-panel-human" class="ft-audio-panel">
+        <strong>Human Hearing:</strong> roughly <span class="ft-audio-highlight">20&nbsp;Hz–20&nbsp;kHz</span>.
+        Operators hear coil hum, pump noise, and the louder end of water leak hiss — but most early
+        damage signatures sit just above this band. By the time a fault is clearly audible, it’s
+        usually well advanced.
+      </div>
+
+      <div id="ft-panel-ultra" class="ft-audio-panel ft-audio-panel-hidden">
+        <strong>Ultrasonic Zone:</strong> roughly <span class="ft-audio-highlight">20–40&nbsp;kHz+</span>.
+        This is where Fortune Teller™ works: micro refractory cracks, flash arcs, cavitation pings,
+        and water leak hiss sliding into the ultrasonic range. These signals are inaudible to humans,
+        but the V.A.U.L.T™ logs them, trends them, and feeds A.I.R.O.N.™ a countdown to Predictive
+        Breakpoint™.
+      </div>
+
+      <p>
+        A.I.R.O.N.™ turns your furnace from “run until it screams” into
+        “fix it while it still whispers.”
+      </p>
+    </div>
+
+    <!-- RIGHT: VIDEO + CAPTION + SPECTRUM & FAULT PANEL -->
+    <div class="ft-audio-video">
+      <div class="ft-audio-video-inner">
+        <video
+          id="fortune-audio-video"
+          src="https://bots.dingfelder.co/furnace-audio-signatures.mp4"
+          autoplay
+          loop
+          playsinline
+          preload="auto">
+        </video>
+
+        <div class="ft-audio-caption">
+          Live furnace visualization: electromagnetic field, molten bath, and ultrasonic audio zones
+          feeding the V.A.U.L.T™.
+        </div>
+
+        <!-- dB / frequency spectrum strip (locked below caption) -->
+        <div class="ft-spectrum-strip" aria-label="Frequency spectrum">
+          <!-- Human band -->
+          <button
+            type="button"
+            class="ft-spectrum-band-btn ft-band-human"
+            data-band="human">
+            <div class="ft-spectrum-bars">
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+            </div>
+            <span class="ft-spectrum-label">0–20&nbsp;kHz</span>
+          </button>
+
+          <!-- Transition band -->
+          <button
+            type="button"
+            class="ft-spectrum-band-btn ft-band-mid"
+            data-band="mid">
+            <div class="ft-spectrum-bars">
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+            </div>
+            <span class="ft-spectrum-label">20–28&nbsp;kHz</span>
+          </button>
+
+          <!-- Ultrasonic band -->
+          <button
+            type="button"
+            class="ft-spectrum-band-btn ft-band-ultra"
+            data-band="ultra">
+            <div class="ft-spectrum-bars">
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+              <div class="ft-spectrum-bar"></div>
+            </div>
+            <span class="ft-spectrum-label">28–40&nbsp;kHz+</span>
+          </button>
+        </div>
+
+        <!-- Fault examples for clicked band -->
+        <div id="ft-fault-panel" class="ft-fault-panel">
+          <strong>Tap a band</strong> on the spectrum strip to see real fault examples
+          in that frequency range.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function initFortuneSection() {
+        var section    = document.getElementById('fortune-audio-section');
+        var v          = document.getElementById('fortune-audio-video');
+        var btnHuman   = document.getElementById('ft-toggle-human');
+        var btnUltra   = document.getElementById('ft-toggle-ultra');
+        var panelHuman = document.getElementById('ft-panel-human');
+        var panelUltra = document.getElementById('ft-panel-ultra');
+        var faultPanel = document.getElementById('ft-fault-panel');
+        var bandButtons= document.querySelectorAll('.ft-spectrum-band-btn');
+
+        /* --- VIDEO AUTOSTART STRATEGY --- */
+        if (v) {
+          function tryPlayMutedFirst() {
+            try {
+              v.muted = true;
+              var p = v.play();
+              if (p && p.then) {
+                p.then(function () {
+                  // gently unmute a moment after playback begins
+                  setTimeout(function () {
+                    v.muted = false;
+                    v.volume = 1.0;
+                  }, 800);
+                }).catch(function () {});
+              }
+            } catch (e) {}
+          }
+
+          // Try on load
+          tryPlayMutedFirst();
+
+          // Retry on first user interaction
+          window.addEventListener('click', function onFirstUser() {
+            tryPlayMutedFirst();
+            window.removeEventListener('click', onFirstUser);
+          });
+        }
+
+        /* --- TOGGLE & PANEL LOGIC --- */
+        if (!section || !btnHuman || !btnUltra || !panelHuman || !panelUltra) return;
+
+        function showHuman() {
+          btnHuman.classList.add('ft-active','ft-color-slow');
+          btnUltra.classList.remove('ft-active','ft-color-fast');
+          panelHuman.classList.remove('ft-audio-panel-hidden');
+          panelUltra.classList.add('ft-audio-panel-hidden');
+          section.classList.add('ft-mode-human');
+          section.classList.remove('ft-mode-ultra');
+        }
+
+        function showUltra() {
+          btnUltra.classList.add('ft-active','ft-color-fast');
+          btnHuman.classList.remove('ft-active','ft-color-slow');
+          panelUltra.classList.remove('ft-audio-panel-hidden');
+          panelHuman.classList.add('ft-audio-panel-hidden');
+          section.classList.add('ft-mode-ultra');
+          section.classList.remove('ft-mode-human');
+        }
+
+        btnHuman.addEventListener('click', showHuman);
+        btnUltra.addEventListener('click', showUltra);
+
+        /* --- CLICKABLE SPECTRUM ZONES --- */
+        var faultTextByBand = {
+          human:
+            "<strong>Human band · 0–20&nbsp;kHz</strong><br>" +
+            "• Coil & transformer hum, pump motors, fans<br>" +
+            "• Water leak hiss just entering the audible range (~16–24&nbsp;kHz tail)<br>" +
+            "• Good for operator awareness – but most damage has already started above this band.",
+          mid:
+            "<strong>Transition band · 20–28&nbsp;kHz</strong><br>" +
+            "• Cavitation ping in the cooling circuit (~22–28&nbsp;kHz)<br>" +
+            "• Early micro-crack formation in refractory<br>" +
+            "• This is where Fortune Teller™ starts warning long before a human hears anything.",
+          ultra:
+            "<strong>Ultrasonic band · 28–40+&nbsp;kHz</strong><br>" +
+            "• Coil hot-spot discharge (~28–32&nbsp;kHz)<br>" +
+            "• Molten metal flash arc (~30–40&nbsp;kHz)<br>" +
+            "• Micro refractory crack growth (~24–30&nbsp;kHz upper tail)<br>" +
+            "• These are the signatures V.A.U.L.T™ turns into Predictive Breakpoint™ countdowns."
+        };
+
+        function handleBandClick(evt) {
+          var band = evt.currentTarget.getAttribute('data-band');
+          if (!band || !faultPanel) return;
+          faultPanel.innerHTML = faultTextByBand[band] || "";
+        }
+
+        bandButtons.forEach(function (btn) {
+          btn.addEventListener('click', handleBandClick);
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFortuneSection);
+      } else {
+        initFortuneSection();
+      }
+    })();
+  </script>
+</section>

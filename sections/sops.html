@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SOP Routing Workflow — A.I.R.O.N. / V.A.U.L.T.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root{
+      --bg-main:#05070b;
+      --bg-panel:#0b1018;
+      --border-gold:#e6b84c;
+      --text-main:#e6ebf4;
+      --text-muted:#9aa3bc;
+      --accent-green:#3bbf6b;
+      --accent-amber:#e6b84c;
+      --accent-red:#e64545;
+      --accent-blue:#4ca3e6;
+      --divider:#1a2130;
+    }
+
+    /* Let GoDaddy control height; we just block sideways overflow */
+    html, body{
+      margin:0;
+      padding:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      background:transparent;
+      color:var(--text-main);
+      overflow-x:hidden;   /* kill horizontal scrollbar */
+    }
+
+    .sop-page{
+      width:100%;
+      max-width:100vw;     /* never wider than viewport */
+      box-sizing:border-box;
+      padding:20px 32px 40px;
+      display:flex;
+      justify-content:center;
+      overflow-x:hidden;   /* extra safety */
+    }
+
+    .sop-screen{
+      width:100%;
+      max-width:1400px;    /* visual max, but still inside sop-page */
+      background:var(--bg-main);
+      border-radius:4px;
+      box-sizing:border-box;
+      padding:20px 24px 24px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .sop-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      border-bottom:1px solid var(--border-gold);
+      padding-bottom:8px;
+    }
+    .sop-title{
+      font-size:22px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--border-gold);
+    }
+    .sop-subtitle{
+      font-size:13px;
+      color:var(--text-muted);
+    }
+
+    .sop-layout{
+      display:grid;
+      grid-template-columns:1.1fr 1.3fr 1.4fr;
+      gap:16px;
+      margin-top:4px;
+    }
+
+    .sop-panel{
+      background:var(--bg-panel);
+      border:1px solid var(--divider);
+      border-radius:6px;
+      padding:12px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:0;
+    }
+
+    .panel-title{
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:var(--border-gold);
+      border-bottom:1px solid var(--divider);
+      padding-bottom:6px;
+    }
+
+    /* LEFT column */
+    .sop-search-row{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .sop-search-row input{
+      flex:1;
+      padding:5px 8px;
+      border-radius:4px;
+      border:1px solid var(--divider);
+      background:#030509;
+      color:var(--text-main);
+      font-size:12px;
+    }
+    .sop-search-row input::placeholder{
+      color:var(--text-muted);
+    }
+    .sop-filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+    .sop-chip{
+      font-size:11px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--divider);
+      color:var(--text-muted);
+    }
+    .sop-chip--active{
+      border-color:var(--border-gold);
+      color:var(--border-gold);
+    }
+
+    .sop-table-wrap{
+      flex:1;
+      overflow:auto;
+      border-radius:4px;
+      border:1px solid var(--divider);
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:11px;
+    }
+    thead{
+      background:#060912;
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+    th,td{
+      padding:5px 8px;
+      border-bottom:1px solid #101623;
+      text-align:left;
+      white-space:nowrap;
+    }
+    th{
+      font-weight:600;
+      color:var(--text-muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-size:10px;
+    }
+    tr:nth-child(even) td{background:#070b13;}
+    tr:hover td{background:#0d1421;}
+
+    .status-pill{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:600;
+    }
+    .status-approved{
+      background:rgba(59,191,107,.12);
+      color:var(--accent-green);
+      border:1px solid rgba(59,191,107,.6);
+    }
+    .status-routing{
+      background:rgba(230,184,76,.12);
+      color:var(--accent-amber);
+      border:1px solid rgba(230,184,76,.7);
+    }
+    .status-draft{
+      background:rgba(76,163,230,.12);
+      color:var(--accent-blue);
+      border:1px solid rgba(76,163,230,.7);
+    }
+    .status-hold{
+      background:rgba(230,69,69,.12);
+      color:var(--accent-red);
+      border:1px solid rgba(230,69,69,.7);
+    }
+
+    .sop-selected-bar{
+      margin-top:6px;
+      padding-top:6px;
+      border-top:1px solid var(--divider);
+      font-size:11px;
+      color:var(--text-muted);
+    }
+    .sop-selected-bar span{
+      color:var(--border-gold);
+    }
+
+    /* CENTER */
+    .sop-summary{
+      background:#060912;
+      border-radius:4px;
+      border:1px solid var(--divider);
+      padding:6px 8px;
+      font-size:11px;
+      color:var(--text-muted);
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:2px 12px;
+    }
+    .sop-summary strong{
+      color:var(--text-main);
+      font-weight:500;
+    }
+
+    .routing-ladder{
+      margin-top:8px;
+      flex:1;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .routing-step{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .routing-line{
+      width:14px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin-top:2px;
+    }
+    .routing-dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      border:2px solid var(--divider);
+      background:var(--bg-panel);
+    }
+    .routing-line::after{
+      content:"";
+      flex:1;
+      width:2px;
+      background:var(--divider);
+      margin-top:2px;
+    }
+    .routing-card{
+      flex:1;
+      border-radius:4px;
+      border:1px solid var(--divider);
+      background:#060912;
+      padding:6px 8px;
+      font-size:11px;
+    }
+    .routing-title{
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-size:10px;
+      margin-bottom:2px;
+    }
+    .routing-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:4px 12px;
+      color:var(--text-muted);
+    }
+    .routing-tag{
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .routing-step--done .routing-dot{
+      border-color:var(--accent-green);
+      background:var(--accent-green);
+    }
+    .routing-step--done .routing-card{
+      border-color:rgba(59,191,107,.7);
+    }
+    .routing-step--current .routing-dot{
+      border-color:var(--accent-amber);
+      background:var(--accent-amber);
+    }
+    .routing-step--current .routing-card{
+      border-color:var(--accent-amber);
+      box-shadow:0 0 0 1px rgba(230,184,76,.35);
+    }
+
+    .routing-footer{
+      margin-top:6px;
+      border-top:1px solid var(--divider);
+      padding-top:6px;
+      font-size:11px;
+      color:var(--text-muted);
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:2px 12px;
+    }
+    .routing-footer strong{
+      color:var(--text-main);
+      font-weight:500;
+    }
+
+    /* RIGHT */
+    .sop-box{
+      background:#060912;
+      border-radius:4px;
+      border:1px solid var(--divider);
+      padding:6px 8px;
+      font-size:11px;
+    }
+    .sop-box + .sop-box{margin-top:6px;}
+    .sop-box-title{
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--text-muted);
+      margin-bottom:4px;
+    }
+    .sop-row{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:2px;
+    }
+    .sop-row-label{color:var(--text-muted);}
+    .sop-row-value{color:var(--text-main);}
+
+    .btn-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:4px;
+    }
+    .btn{
+      border-radius:4px;
+      border:1px solid var(--divider);
+      background:#05070b;
+      color:var(--text-main);
+      font-size:11px;
+      padding:4px 8px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      cursor:default;
+      white-space:nowrap;
+    }
+    .btn-approve{
+      border-color:rgba(59,191,107,.8);
+      color:var(--accent-green);
+    }
+    .btn-reject{
+      border-color:rgba(230,69,69,.85);
+      color:var(--accent-red);
+    }
+    .btn-clarify{
+      border-color:rgba(230,184,76,.85);
+      color:var(--accent-amber);
+    }
+    .btn-primary{
+      border-color:var(--border-gold);
+      color:var(--border-gold);
+      background:#05070b;
+      width:100%;
+      text-align:center;
+      margin-top:6px;
+      padding:6px 10px;
+    }
+
+    .change-list{
+      list-style:disc;
+      padding-left:16px;
+      margin-top:2px;
+      color:var(--text-muted);
+    }
+
+    .comments-box{
+      margin-top:3px;
+      border-radius:4px;
+      border:1px solid var(--divider);
+      background:#030509;
+      min-height:70px;
+      padding:4px 6px;
+      color:var(--text-muted);
+      font-size:11px;
+    }
+
+    .signoff-row{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      font-size:11px;
+      color:var(--text-muted);
+      margin-top:5px;
+    }
+    .signoff-field{
+      flex:1;
+      border-bottom:1px solid var(--divider);
+      padding-bottom:2px;
+    }
+
+    @media (max-width:1100px){
+      .sop-screen{
+        padding:16px;
+      }
+      .sop-layout{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sop-page">
+    <div class="sop-screen">
+      <header class="sop-header">
+        <div>
+          <div class="sop-title">SOP Routing Workflow — A.I.R.O.N. / V.A.U.L.T.</div>
+          <div class="sop-subtitle">Furnace 1 — SOP Library, Routing Status, and Approval Panel (HMI Read-Only)</div>
+        </div>
+        <div class="sop-subtitle">MODE: SERIAL ROUTING • SITE: Your Company</div>
+      </header>
+
+      <main class="sop-layout">
+        <!-- LEFT PANEL -->
+        <section class="sop-panel">
+          <div class="panel-title">Active SOPs (Plantwide)</div>
+          <div class="sop-search-row">
+            <input type="text" placeholder="Search SOP ID / Title">
+          </div>
+          <div class="sop-filters">
+            <span class="sop-chip sop-chip--active">All</span>
+            <span class="sop-chip">Awaiting Review</span>
+            <span class="sop-chip">In Routing</span>
+            <span class="sop-chip">Approved</span>
+            <span class="sop-chip">On Hold</span>
+          </div>
+          <div class="sop-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SOP ID</th>
+                  <th>Title</th>
+                  <th>Rev</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>F1-MELT-001</td>
+                  <td>Furnace 1 Tap-to-Tap Sequence</td>
+                  <td>3</td>
+                  <td><span class="status-pill status-routing">In Routing</span></td>
+                </tr>
+                <tr>
+                  <td>F1-SAFE-004</td>
+                  <td>Ladle Preheat &amp; Inspection</td>
+                  <td>2</td>
+                  <td><span class="status-pill status-approved">Approved</span></td>
+                </tr>
+                <tr>
+                  <td>PLT-GEN-010</td>
+                  <td>Lockout / Tagout Fundamentals</td>
+                  <td>5</td>
+                  <td><span class="status-pill status-approved">Approved</span></td>
+                </tr>
+                <tr>
+                  <td>F1-MAINT-021</td>
+                  <td>Coil Cooling Circuit Verification</td>
+                  <td>1</td>
+                  <td><span class="status-pill status-draft">Draft (DSP)</span></td>
+                </tr>
+                <tr>
+                  <td>QC-LAB-007</td>
+                  <td>Sample Pull &amp; Chill Block Prep</td>
+                  <td>4</td>
+                  <td><span class="status-pill status-hold">Hold</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sop-selected-bar">
+            Selected SOP: <span>F1-MELT-001 — Rev 3 (In Routing)</span>
+          </div>
+        </section>
+
+        <!-- CENTER PANEL -->
+        <section class="sop-panel">
+          <div class="panel-title">Approval Path — Draft SOP Packet (DSP)</div>
+          <div class="sop-summary">
+            <div><strong>Originator:</strong> J. Smith (Melt Deck)</div>
+            <div><strong>Submitted:</strong> 2025-11-29 14:37</div>
+            <div><strong>Reason Code:</strong> Safety Step Clarification</div>
+            <div><strong>Routing Mode:</strong> Serial (One Dept at a Time)</div>
+          </div>
+
+          <div class="routing-ladder">
+            <div class="routing-step routing-step--done">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">Safety</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: Approved</span>
+                  <span>By: LS • 2025-11-29 16:04</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="routing-step routing-step--done">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">Environmental / Compliance</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: Approved</span>
+                  <span>By: KR • 2025-11-30 09:12</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="routing-step routing-step--current">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">Maintenance</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: In Review</span>
+                  <span>Time in Step: 02:14:36</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="routing-step routing-step--pending">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">Process Engineering</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: Pending</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="routing-step routing-step--pending">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">Quality</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: Pending</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="routing-step routing-step--pending">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">Melt Deck Leadership</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: Pending</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="routing-step routing-step--pending">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">Plant Manager</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: Pending</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="routing-step routing-step--pending">
+              <div class="routing-line">
+                <div class="routing-dot"></div>
+              </div>
+              <div class="routing-card">
+                <div class="routing-title">A.I.R.O.N. — Final Release</div>
+                <div class="routing-meta">
+                  <span class="routing-tag">Status: Pending</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="routing-footer">
+            <div><strong>Current Dept:</strong> Maintenance</div>
+            <div><strong>Next Dept:</strong> Process Engineering</div>
+            <div><strong>Target Review Window:</strong> 24 hours</div>
+            <div><strong>Packet ID:</strong> DSP-2025-11-29-1437</div>
+          </div>
+        </section>
+
+        <!-- RIGHT PANEL -->
+        <section class="sop-panel">
+          <div class="panel-title">Current Review — Maintenance (Keyboard Edit from Workstation Only)</div>
+
+          <div class="sop-box">
+            <div class="sop-box-title">SOP Snapshot</div>
+            <div class="sop-row">
+              <span class="sop-row-label">SOP ID:</span>
+              <span class="sop-row-value">F1-MELT-001</span>
+            </div>
+            <div class="sop-row">
+              <span class="sop-row-label">Current Approved Rev:</span>
+              <span class="sop-row-value">2</span>
+            </div>
+            <div class="sop-row">
+              <span class="sop-row-label">Proposed Rev (DSP):</span>
+              <span class="sop-row-value">3 — DSP-2025-11-29-1437</span>
+            </div>
+            <div class="btn-row">
+              <span class="btn">View Current SOP (Rev 2)</span>
+              <span class="btn">View Proposed SOP (Rev 3)</span>
+            </div>
+          </div>
+
+          <div class="sop-box">
+            <div class="sop-box-title">Change Summary</div>
+            <ul class="change-list">
+              <li>Added PPE verification step before tap start.</li>
+              <li>Clarified cooling water permissive wording.</li>
+              <li>Aligned furnace tilt interlock response with Safety SOP.</li>
+            </ul>
+          </div>
+
+          <div class="sop-box">
+            <div class="sop-box-title">Maintenance Decision (View-Only on HMI)</div>
+            <div class="btn-row">
+              <span class="btn btn-approve">Approve</span>
+              <span class="btn btn-reject">Reject</span>
+              <span class="btn btn-clarify">Request Clarification</span>
+            </div>
+            <div class="comments-box">
+              Reviewer comments are entered from a secure workstation or laptop.
+              This HMI panel displays routing status and decisions read-only.
+            </div>
+            <div class="signoff-row">
+              <div class="signoff-field">Reviewer: (workstation sign-off)</div>
+              <div class="signoff-field">PIN / Badge: (workstation only)</div>
+            </div>
+            <span class="btn btn-primary">
+              Decisions and edits are submitted from the corporate SOP editor, not this HMI.
+            </span>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
