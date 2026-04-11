@@ -586,3 +586,47 @@ a:focus {
     grid-template-columns: 1fr;
   }
 }
+
+
+.conceptual-grid .sample-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.sample-figure {
+  margin: 0;
+  padding: 18px 18px 0;
+  background:
+    linear-gradient(180deg, rgba(9,17,27,0.96), rgba(4,10,16,0.98)),
+    radial-gradient(circle at top left, rgba(245,159,40,0.08), transparent 22%),
+    radial-gradient(circle at top right, rgba(111,211,255,0.08), transparent 22%);
+  border-bottom: 1px solid rgba(123,154,181,0.14);
+}
+
+.sample-figure img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 16px;
+  display: block;
+  background: rgba(255,255,255,0.03);
+}
+
+.badge-figure img {
+  object-fit: contain;
+  padding: 12px;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.06), rgba(255,255,255,0.02) 52%, transparent 72%),
+    linear-gradient(180deg, rgba(11,16,24,0.96), rgba(4,10,16,0.98));
+}
+
+@media (max-width: 720px) {
+  .sample-figure {
+    padding: 16px 16px 0;
+  }
+
+  .sample-figure img {
+    height: 240px;
+  }
+}
