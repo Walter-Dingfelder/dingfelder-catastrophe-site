@@ -1043,3 +1043,80 @@ a:focus {
   height: 1px !important;
   overflow: hidden !important;
 }
+
+
+.interest-toggle,
+.consent-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(111,211,255,0.18);
+  background: rgba(4,10,16,0.92);
+  color: #eef4fb;
+  padding: 14px 16px;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.interest-toggle:hover,
+.consent-toggle:hover {
+  border-color: rgba(245,159,40,0.38);
+}
+
+.interest-toggle[aria-pressed="true"],
+.consent-toggle[aria-pressed="true"] {
+  border-color: rgba(245,159,40,0.52);
+  background: linear-gradient(180deg, rgba(245,159,40,0.14), rgba(245,159,40,0.08));
+  box-shadow: 0 0 0 1px rgba(245,159,40,0.12), 0 0 18px rgba(245,159,40,0.14);
+}
+
+.toggle-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: transparent;
+  flex: 0 0 auto;
+  font-weight: 900;
+}
+
+.interest-toggle[aria-pressed="true"] .toggle-icon,
+.consent-toggle[aria-pressed="true"] .toggle-icon {
+  color: #081018;
+  background: var(--gold);
+  border-color: rgba(245,159,40,0.8);
+}
+
+.toggle-on { display: none; }
+
+.interest-toggle[aria-pressed="true"] .toggle-off,
+.consent-toggle[aria-pressed="true"] .toggle-off {
+  display: none;
+}
+
+.interest-toggle[aria-pressed="true"] .toggle-on,
+.consent-toggle[aria-pressed="true"] .toggle-on {
+  display: inline;
+}
+
+.cap-card label,
+.checkbox-inline {
+  border-top: none;
+  margin-top: 14px;
+  padding-top: 0;
+}
+
+.consent-toggle {
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
