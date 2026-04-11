@@ -123,8 +123,10 @@
 
     try {
       const formData = new FormData(form);
-
       formData.set("form-name", "cat-interest");
+      if (!formData.get("bot-field")) {
+        formData.set("bot-field", "");
+      }
 
       const response = await fetch("/", {
         method: "POST",
@@ -136,7 +138,7 @@
         throw new Error("Netlify form submission failed");
       }
 
-      window.location.href = "/participate/thanks/";
+      window.location.assign("/participate/thanks/");
     } catch (error) {
       console.error("CAT form submission error:", error);
       alert("Submission did not complete. Please try again.");
