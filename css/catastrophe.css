@@ -375,7 +375,7 @@ a:focus {
   .steps, .cards, .form-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .hero {
     grid-template-columns: 1fr;
     gap: 18px;
