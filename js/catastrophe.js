@@ -1,26 +1,103 @@
-(() => {
-  const audienceType = document.getElementById('audienceType');
-  const audienceCopy = document.getElementById('audience-copy');
-  const buttons = document.querySelectorAll('.audience-btn');
+/* C.A.T.A.S.T.R.O.P.H.E.™
+   Core client logic
+   Dingfelder Enterprises
+*/
 
-  const copy = {
-    fire: '<p><strong>Fire and emergency services matter first here.</strong> This review is meant to show how local responder safety can grow when A.I.R.O.N. is deployed in participating businesses and operations.</p>',
-    business: '<p><strong>Business participation is part of the safety equation.</strong> A.I.R.O.N. deployment is the local operating foundation that allows C.A.T.A.S.T.R.O.P.H.E. to exist as a real emergency-response layer instead of an abstract idea.</p>',
-    public: '<p><strong>Community interest helps identify where this protection should grow next.</strong> The public-safety benefit is real, but it depends on local business deployment of A.I.R.O.N. and local responder engagement.</p>'
+(function () {
+  "use strict";
+
+  const STORAGE_ACK = "deReadThisAck_v1";
+
+  function qs(sel) {
+    return document.querySelector(sel);
+  }
+
+  function openModal() {
+    const modal = qs(".de-modal");
+    if (!modal) return;
+    modal.classList.add("is-open");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    const modal = qs(".de-modal");
+    if (!modal) return;
+    modal.classList.remove("is-open");
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+  }
+
+  function acknowledged() {
+    try {
+      return sessionStorage.getItem(STORAGE_ACK) === "1";
+    } catch {
+      return false;
+    }
+  }
+
+  function acknowledge() {
+    try {
+      sessionStorage.setItem(STORAGE_ACK, "1");
+    } catch {}
+    closeModal();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const continueBtn = qs("[data-de-ack]");
+    if (continueBtn) {
+      continueBtn.addEventListener("click", acknowledge);
+    }
+
+    // Auto-open modal if present and not acknowledged
+    if (!acknowledged() && qs(".de-modal")) {
+      openModal();
+    }
+
+    // Escape intentionally does nothing (life-safety acknowledgment required)
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+      }
+    });
+  });
+})();
+
+
+(function () {
+  "use strict";
+
+  const audienceMessages = {
+    fire: '<p><strong>For fire departments, EMS, and emergency-service affiliates:</strong> Your review helps show where A.I.R.O.N.-enabled local response support would matter most. C.A.T.A.S.T.R.O.P.H.E. is built into every A.I.R.O.N. deployment, and optional SOS tablets can extend guided information, safer continuity, and offsite coordination into the scene when conditions demand it.</p>',
+    business: '<p><strong>For businesses, facilities, and operational leaders:</strong> Your review helps identify where A.I.R.O.N. deployments could strengthen both operational resilience and community-connected emergency response. C.A.T.A.S.T.R.O.P.H.E. is native to every A.I.R.O.N. deployment and can help bring structured guidance, critical information, and safer continuity into high-consequence events.</p>',
+    public: '<p><strong>For community members and the general public:</strong> Your interest helps show where local protection, responder support, and community-connected deployment matter most. C.A.T.A.S.T.R.O.P.H.E. is not a standalone public app. It becomes available through A.I.R.O.N. deployments in participating local businesses and operations, helping extend safety and continuity where risk already exists.</p>'
   };
 
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      buttons.forEach((btn) => {
-        btn.classList.remove('is-active');
-        btn.setAttribute('aria-pressed', 'false');
-      });
+  function setAudience(audience) {
+    const panel = document.getElementById("audience-copy");
+    const buttons = document.querySelectorAll(".audience-btn");
+    if (!panel || !audienceMessages[audience]) return;
 
-      button.classList.add('is-active');
-      button.setAttribute('aria-pressed', 'true');
-      const selected = button.dataset.audience;
-      if (audienceType) audienceType.value = selected;
-      if (audienceCopy && copy[selected]) audienceCopy.innerHTML = copy[selected];
+    panel.innerHTML = audienceMessages[audience];
+
+    buttons.forEach((btn) => {
+      const isActive = btn.dataset.audience === audience;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".audience-btn");
+    if (!buttons.length) return;
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setAudience(btn.dataset.audience);
+      });
+    });
+
+    const initial = document.querySelector(".audience-btn.is-active")?.dataset.audience || "fire";
+    setAudience(initial);
   });
 })();
