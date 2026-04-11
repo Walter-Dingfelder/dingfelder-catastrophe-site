@@ -151,7 +151,6 @@
 })();
 
 
-
 (function () {
   const toggles = document.querySelectorAll(".interest-toggle");
   toggles.forEach((btn) => {
@@ -160,9 +159,5 @@
       btn.setAttribute("aria-pressed", next ? "true" : "false");
     });
   });
-
-  
-
-  , { capture: true });
-  }
 })();
+
