@@ -75,7 +75,7 @@ img { max-width: 100%; display: block; }
   font-size: clamp(2rem, 4.1vw, 4.2rem);
   line-height: 0.96;
   letter-spacing: -0.035em;
-  max-width: 11ch;
+  max-width: none;
 }
 .hero-copy h1 span { color: var(--gold); }
 .lede {
