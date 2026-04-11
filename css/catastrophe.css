@@ -73,9 +73,18 @@ img { max-width: 100%; display: block; }
 .hero-copy h1 {
   margin: 0 0 1.15rem;
   font-size: clamp(1.6rem, 3.3vw, 3.35rem);
-  line-height: 0.98;
+  line-height: 1.02;
   letter-spacing: -0.03em;
   max-width: none;
+}
+
+.hero-line,
+.hero-cat {
+  display: block;
+}
+
+.hero-cat {
+  color: var(--gold);
 }
 .hero-copy h1 span { color: var(--gold); }
 .lede {
