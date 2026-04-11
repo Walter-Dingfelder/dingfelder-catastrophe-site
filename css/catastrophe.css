@@ -412,7 +412,7 @@ a:focus {
 
 @media (max-width: 720px) {
   .cat-page { padding-top: 18px; }
-  .hero-copy, .hero-visual, .audience, .definition, .how, .capabilities, .form-section { padding: 22px; }
+  .hero-copy, .hero-visual, .audience, .airon-def, .definition, .how, .capabilities, .form-section { padding: 22px; }
     .lede { font-size: 1rem; }
   .cap-card { grid-template-columns: 1fr; }
   .cap-card img { width: 100%; height: auto; max-height: 220px; }
@@ -422,4 +422,18 @@ a:focus {
   .definition-grid {
     grid-template-columns: 1fr;
   }
+}
+
+
+.airon-def {
+  border-radius: 22px;
+  border: 1px solid var(--stroke);
+  background:
+    radial-gradient(circle at top left, rgba(111,211,255,0.06), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(245,159,40,0.08), transparent 24%),
+    rgba(255,255,255,0.03);
+}
+
+.airon-def .definition-copy p + p {
+  margin-top: 1rem;
 }
