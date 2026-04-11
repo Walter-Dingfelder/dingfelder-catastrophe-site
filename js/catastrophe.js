@@ -101,3 +101,55 @@
     setAudience(initial);
   });
 })();
+
+
+(function () {
+  const form = document.getElementById("cat-interest-form");
+  if (!form) return;
+
+  function encodeFormData(data) {
+    return new URLSearchParams(data).toString();
+  }
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : "";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+    }
+
+    try {
+      const formData = new FormData(form);
+
+      // Ensure Netlify sees the correct form name
+      if (!formData.get("form-name")) {
+        formData.append("form-name", "cat-interest");
+      }
+
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: encodeFormData(formData)
+      });
+
+      if (!response.ok) {
+        throw new Error("Netlify form submission failed");
+      }
+
+      window.location.href = "/participate/thanks/";
+    } catch (error) {
+      console.error("CAT form submission error:", error);
+      alert("Submission did not complete. Please try again.");
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText || "Submit interest";
+      }
+    }
+  });
+})();
+
