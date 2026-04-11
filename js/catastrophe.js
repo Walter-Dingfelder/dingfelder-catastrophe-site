@@ -107,8 +107,8 @@
   const form = document.getElementById("cat-interest-form");
   if (!form) return;
 
-  function encodeFormData(data) {
-    return new URLSearchParams(data).toString();
+  function encodeFormData(formData) {
+    return new URLSearchParams(formData).toString();
   }
 
   form.addEventListener("submit", async function (event) {
@@ -124,16 +124,11 @@
     try {
       const formData = new FormData(form);
 
-      // Ensure Netlify sees the correct form name
-      if (!formData.get("form-name")) {
-        formData.append("form-name", "cat-interest");
-      }
+      formData.set("form-name", "cat-interest");
 
       const response = await fetch("/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encodeFormData(formData)
       });
 
