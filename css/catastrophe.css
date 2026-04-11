@@ -83,10 +83,14 @@ img { max-width: 100%; display: block; }
   display: block;
 }
 
+.hero-line {
+  color: var(--text);
+}
+
 .hero-cat {
   color: var(--gold);
 }
-.hero-copy h1 span { color: var(--gold); }
+
 .lede {
   font-size: 1.22rem;
   line-height: 1.55;
