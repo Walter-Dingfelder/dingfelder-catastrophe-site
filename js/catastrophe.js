@@ -161,23 +161,8 @@
     });
   });
 
-  const consentBtn = document.getElementById("consentToggle");
-  const consentHidden = document.getElementById("consentHidden");
-  if (consentBtn && consentHidden) {
-    consentBtn.addEventListener("click", () => {
-      const next = consentBtn.getAttribute("aria-pressed") !== "true";
-      consentBtn.setAttribute("aria-pressed", next ? "true" : "false");
-      consentHidden.value = next ? "Yes" : "";
-    });
-  }
+  
 
-  const form = document.getElementById("cat-interest-form");
-  if (form && consentBtn && consentHidden) {
-    form.addEventListener("submit", function (event) {
-      if (!consentHidden.value) {
-        event.preventDefault();
-        alert("Please acknowledge the interest-only statement before submitting.");
-      }
-    }, { capture: true });
+  , { capture: true });
   }
 })();
