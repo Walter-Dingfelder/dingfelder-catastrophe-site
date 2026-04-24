@@ -1403,3 +1403,252 @@ body {
     background: linear-gradient(180deg, rgba(11,17,24,0.92) 0%, rgba(11,17,24,0.78) 56%, rgba(11,17,24,0.25) 80%, rgba(11,17,24,0.00) 100%);
   }
 }
+
+
+
+/* Official C.A.T.A.S.T.R.O.P.H.E. acronym treatment */
+.acronym-clarifier {
+  margin: -0.25rem 0 1rem;
+  color: #fff4db;
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.acronym-clarifier strong {
+  color: var(--gold);
+}
+
+.acronym-card {
+  margin: 0 auto 22px;
+  padding: 24px;
+  border-color: rgba(245,159,40,0.28);
+  background:
+    radial-gradient(circle at top left, rgba(245,159,40,0.14), transparent 34%),
+    rgba(255,255,255,0.035);
+}
+
+.acronym-title {
+  color: var(--gold);
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
+  line-height: 1;
+  letter-spacing: 0.13em;
+  font-weight: 900;
+  margin-bottom: 12px;
+  word-break: break-word;
+}
+
+.acronym-card p {
+  margin: 0;
+  color: #f4f7fb;
+  font-size: 1.03rem;
+  line-height: 1.65;
+}
+
+.acronym-card p + p {
+  margin-top: 10px;
+}
+
+.acronym-card strong {
+  color: var(--gold);
+}
+
+.acronym-note {
+  color: var(--muted) !important;
+}
+
+/* =========================================================
+   CAT Interest / Review expansion
+   Industrial + public app + student/school paths
+   ========================================================= */
+
+.review-path-grid,
+.law-security-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.review-path-card,
+.law-security .panel-card,
+.form-fieldset,
+.safety-boundary-statement {
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,0.035);
+  border-radius: 18px;
+}
+
+.review-path-card {
+  padding: 22px;
+}
+
+.path-kicker {
+  display: inline-flex;
+  margin-bottom: 12px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.review-path-card h3,
+.public-safety-review h3,
+.law-security .panel-card h3 {
+  margin: 0 0 10px;
+  color: #fff4db;
+}
+
+.review-path-card p,
+.public-safety-review p,
+.law-security .panel-card p,
+.law-security .panel-card li {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.public-safety-review {
+  margin-top: 18px;
+}
+
+.audience-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.audience-chip-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(111,211,255,0.22);
+  background: rgba(111,211,255,0.07);
+  color: #dff5ff;
+  padding: 0 12px;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.law-security {
+  margin-top: 28px;
+  padding: 34px;
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.law-security .panel-card ul {
+  margin: 14px 0 0;
+  padding-left: 1.15rem;
+}
+
+.law-security .panel-card li + li {
+  margin-top: 0.48rem;
+}
+
+.boundary-card {
+  background: rgba(245,159,40,0.065);
+  border-color: rgba(245,159,40,0.22);
+}
+
+.cat-review-form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-fieldset {
+  margin: 0;
+  padding: 22px;
+}
+
+.form-fieldset legend {
+  color: #fff4db;
+  font-size: 1.05rem;
+  font-weight: 850;
+  padding: 0 6px;
+}
+
+.fieldset-helper {
+  color: var(--muted);
+  margin: 18px 0 10px;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.choice-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 15px;
+  border-radius: 15px;
+  border: 1px solid rgba(111,211,255,0.16);
+  background: rgba(6,15,24,0.55);
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.choice-card strong {
+  display: block;
+  color: #f2f6fb;
+  margin-bottom: 4px;
+}
+
+.choice-card input,
+.compact-check-grid input {
+  margin-top: 0.25rem;
+  accent-color: var(--gold);
+}
+
+.compact-check-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+.compact-check-grid label {
+  color: var(--muted);
+  line-height: 1.45;
+  padding: 10px 12px;
+  border: 1px solid rgba(123,154,181,0.14);
+  background: rgba(255,255,255,0.025);
+  border-radius: 12px;
+}
+
+.safety-boundary-statement {
+  padding: 16px 18px;
+  color: #f3e2bd;
+  line-height: 1.65;
+  background: rgba(245,159,40,0.09);
+  border-color: rgba(245,159,40,0.28);
+}
+
+.safety-boundary-statement strong {
+  color: var(--gold);
+}
+
+@media (max-width: 920px) {
+  .review-path-grid,
+  .law-security-grid,
+  .check-grid,
+  .compact-check-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .law-security {
+    padding: 24px;
+  }
+
+  .form-fieldset {
+    padding: 18px;
+  }
+}
