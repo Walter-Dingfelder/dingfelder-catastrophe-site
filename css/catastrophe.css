@@ -1652,3 +1652,162 @@ body {
     padding: 18px;
   }
 }
+
+
+/* ===== C.A.T.A.S.T.R.O.P.H.E. form polish v4 ===== */
+.form-fieldset {
+  display: grid;
+  gap: 14px;
+}
+
+.form-fieldset legend {
+  margin-bottom: 2px;
+}
+
+.fieldset-intro {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.question-label {
+  max-width: 760px;
+  align-items: start;
+  gap: 10px;
+}
+
+.question-label select {
+  max-width: 440px;
+}
+
+.fieldset-helper {
+  margin: 4px 0 0;
+}
+
+.choice-card,
+.compact-check-grid label {
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.choice-card input,
+.compact-check-grid input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex: 0 0 auto;
+}
+
+.compact-check-grid {
+  gap: 12px 14px;
+  align-items: stretch;
+}
+
+.compact-check-grid label {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 12px;
+  min-height: 100%;
+  font-weight: 600;
+}
+
+.choice-card:hover,
+.compact-check-grid label:hover {
+  border-color: rgba(245,159,40,0.34);
+  background: rgba(255,255,255,0.045);
+}
+
+.choice-card:has(input:checked),
+.compact-check-grid label:has(input:checked) {
+  border-color: rgba(245,159,40,0.42);
+  background: rgba(245,159,40,0.10);
+  box-shadow: 0 0 0 1px rgba(245,159,40,0.12) inset;
+}
+
+.choice-card:has(input:checked) strong,
+.compact-check-grid label:has(input:checked) {
+  color: #fff6e6;
+}
+
+@media (max-width: 920px) {
+  .question-label select {
+    max-width: none;
+  }
+}
+
+
+/* ===== C.A.T.A.S.T.R.O.P.H.E. form polish v5: stronger checkbox structure ===== */
+.form-fieldset {
+  border: 1px solid rgba(111,211,255,0.16);
+  border-radius: 18px;
+  background: rgba(8,18,30,0.82);
+}
+
+.question-label {
+  padding: 14px 16px;
+  border: 1px solid rgba(123,154,181,0.18);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.028);
+}
+
+.question-label select {
+  margin-top: 2px;
+}
+
+.check-grid,
+.compact-check-grid {
+  margin-top: 6px;
+  padding: 6px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.018);
+  border: 1px solid rgba(123,154,181,0.10);
+}
+
+.choice-card,
+.compact-check-grid label {
+  min-height: 64px;
+  border-color: rgba(111,211,255,0.18);
+  background: rgba(7,15,25,0.70);
+}
+
+.choice-card {
+  padding: 16px 16px;
+}
+
+.choice-card input,
+.compact-check-grid input {
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  justify-self: center;
+}
+
+.compact-check-grid label {
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
+  padding: 13px 14px;
+  line-height: 1.42;
+}
+
+.compact-check-grid label:hover,
+.choice-card:hover {
+  transform: translateY(-1px);
+}
+
+.compact-check-grid label:has(input:checked),
+.choice-card:has(input:checked) {
+  border-color: rgba(245,159,40,0.48);
+  background: linear-gradient(180deg, rgba(245,159,40,0.14), rgba(245,159,40,0.08));
+  box-shadow: 0 0 0 1px rgba(245,159,40,0.16) inset;
+}
+
+.form-fieldset + .form-fieldset {
+  margin-top: 4px;
+}
+
+@media (max-width: 1200px) {
+  .compact-check-grid {
+    grid-template-columns: 1fr;
+  }
+}
