@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">C.A.T.A.S.T.R.O.P.H.E. tablet communication stack</title>
+  <desc id="desc">A rugged emergency tablet concept with mandatory Wi-Fi, Bluetooth, GPS/GNSS, LTE/5G, SMS, VOIP, docking, camera, kiosk mode, and fleet management callouts.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071018"/>
+      <stop offset="0.48" stop-color="#0a1621"/>
+      <stop offset="1" stop-color="#050a0f"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffbd57"/>
+      <stop offset="1" stop-color="#f59f28"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7ce2ff"/>
+      <stop offset="1" stop-color="#2a7fb6"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="25" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <style>
+      .small{font:700 22px Inter,Arial,sans-serif;fill:#dbe8f5}.tiny{font:600 18px Inter,Arial,sans-serif;fill:#9fb1c4}.label{font:900 25px Inter,Arial,sans-serif;fill:#fff}.kicker{font:900 18px Inter,Arial,sans-serif;letter-spacing:.13em;fill:#f59f28}.title{font:900 47px Inter,Arial,sans-serif;fill:#fff;letter-spacing:-.03em}.call{font:800 21px Inter,Arial,sans-serif;fill:#f8fbff}.call2{font:600 16px Inter,Arial,sans-serif;fill:#b8c8d8}.line{stroke:#6fd3ff;stroke-width:3;stroke-linecap:round;opacity:.42}.linegold{stroke:#f59f28;stroke-width:3;stroke-linecap:round;opacity:.5}.chip{fill:rgba(255,255,255,.04);stroke:rgba(111,211,255,.25);stroke-width:2}.chipgold{fill:rgba(245,159,40,.11);stroke:rgba(245,159,40,.48);stroke-width:2}.screenTxt{font:800 19px Inter,Arial,sans-serif;fill:#eaf0f6}.screenTiny{font:700 13px Inter,Arial,sans-serif;fill:#a9b7c6}.screenGold{fill:#f59f28}.green{fill:#7ed9a5}.red{fill:#ff7474}.orange{fill:#ffb14a}
+    </style>
+  </defs>
+  <rect width="1400" height="900" rx="0" fill="url(#bg)"/>
+  <circle cx="145" cy="130" r="270" fill="#f59f28" opacity="0.11"/>
+  <circle cx="1220" cy="120" r="290" fill="#6fd3ff" opacity="0.10"/>
+  <circle cx="1070" cy="760" r="280" fill="#f59f28" opacity="0.07"/>
+
+  <text x="72" y="82" class="kicker">DINGFELDER ENTERPRISES · A.I.R.O.N. EMERGENCY HARDWARE RFQ</text>
+  <text x="72" y="136" class="title">C.A.T.A.S.T.R.O.P.H.E. Tablet Baseline</text>
+  <text x="72" y="174" class="small">Rugged Android or Windows production tablet with mandatory emergency communications hardware.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="490" y="195" width="420" height="575" rx="52" fill="#101d28" stroke="#617a92" stroke-width="5"/>
+    <rect x="523" y="238" width="354" height="490" rx="29" fill="#071018" stroke="#293d4f" stroke-width="3"/>
+    <circle cx="700" cy="752" r="12" fill="#1b2b38" stroke="#70889c" stroke-width="2"/>
+    <circle cx="700" cy="218" r="7" fill="#02070a" stroke="#556b7d" stroke-width="2"/>
+  </g>
+
+  <g transform="translate(548 270)">
+    <text x="0" y="0" class="screenTxt">C.A.T.A.S.T.R.O.P.H.E.™</text>
+    <text x="0" y="34" class="screenTiny">FIELD TABLET · KIOSK LOCKED</text>
+    <rect x="0" y="62" width="304" height="50" rx="14" fill="rgba(245,159,40,.12)" stroke="rgba(245,159,40,.42)"/>
+    <text x="18" y="94" class="screenTxt screenGold">EMERGENCY READY</text>
+    <g transform="translate(0 142)">
+      <rect width="143" height="72" rx="16" fill="rgba(255,255,255,.045)" stroke="rgba(111,211,255,.2)"/>
+      <text x="16" y="30" class="screenTiny">LOCATION</text>
+      <text x="16" y="57" class="screenTxt">GPS/GNSS</text>
+      <rect x="161" width="143" height="72" rx="16" fill="rgba(255,255,255,.045)" stroke="rgba(111,211,255,.2)"/>
+      <text x="177" y="30" class="screenTiny">COMMS</text>
+      <text x="177" y="57" class="screenTxt">SMS + VOIP</text>
+    </g>
+    <g transform="translate(0 236)">
+      <rect width="304" height="134" rx="18" fill="rgba(255,255,255,.035)" stroke="rgba(255,255,255,.10)"/>
+      <text x="18" y="34" class="screenTiny">LAST KNOWN SNAPSHOT</text>
+      <text x="18" y="66" class="screenTxt">Timestamp · Battery · Device State</text>
+      <text x="18" y="100" class="screenTxt">Connection Path · Location Anchor</text>
+    </g>
+  </g>
+
+  <g>
+    <path d="M488 306 L350 246" class="linegold"/>
+    <path d="M488 397 L330 396" class="line"/>
+    <path d="M488 512 L340 610" class="line"/>
+    <path d="M912 302 L1050 246" class="linegold"/>
+    <path d="M912 398 L1076 398" class="line"/>
+    <path d="M912 515 L1054 612" class="line"/>
+  </g>
+
+  <g transform="translate(70 215)">
+    <rect width="300" height="86" rx="20" class="chipgold"/>
+    <text x="24" y="36" class="call">Wi-Fi</text>
+    <text x="24" y="63" class="call2">Starlink · VOIP · sync</text>
+  </g>
+  <g transform="translate(70 354)">
+    <rect width="300" height="86" rx="20" class="chip"/>
+    <text x="24" y="36" class="call">Bluetooth</text>
+    <text x="24" y="63" class="call2">Fallback link to A.I.R.O.N. base</text>
+  </g>
+  <g transform="translate(70 580)">
+    <rect width="300" height="86" rx="20" class="chip"/>
+    <text x="24" y="36" class="call">GPS / GNSS</text>
+    <text x="24" y="63" class="call2">Tablet finder · map projection</text>
+  </g>
+
+  <g transform="translate(1030 215)">
+    <rect width="300" height="86" rx="20" class="chipgold"/>
+    <text x="24" y="36" class="call">LTE / 5G Cellular</text>
+    <text x="24" y="63" class="call2">Emergency data fallback</text>
+  </g>
+  <g transform="translate(1030 354)">
+    <rect width="300" height="86" rx="20" class="chip"/>
+    <text x="24" y="36" class="call">SMS / Text</text>
+    <text x="24" y="63" class="call2">Emergency alert path required</text>
+  </g>
+  <g transform="translate(1030 580)">
+    <rect width="300" height="86" rx="20" class="chip"/>
+    <text x="24" y="36" class="call">Kiosk + Fleet MDM</text>
+    <text x="24" y="63" class="call2">Android or Windows option</text>
+  </g>
+
+  <g transform="translate(144 738)">
+    <rect width="1112" height="82" rx="24" fill="rgba(255,255,255,.04)" stroke="rgba(245,159,40,.32)"/>
+    <text x="34" y="34" class="label">Must be quoted as baseline hardware — not optional upgrades.</text>
+    <text x="34" y="62" class="tiny">Wi-Fi · Bluetooth · GPS/GNSS · LTE/5G cellular · SMS · camera · dock charging · rugged enclosure · controlled kiosk mode</text>
+  </g>
+</svg>

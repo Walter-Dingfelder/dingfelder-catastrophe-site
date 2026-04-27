@@ -1,0 +1,212 @@
+<section class="container">
+  <h1 class="page-title">Bot Directory</h1>
+  <p class="page-sub">Tap a bot to calculate, convert, and conquer your craft.</p>
+
+  <div id="bot-dir" data-mode="prod"></div>
+
+  <div class="notice">
+    Proprietary Notice: This interface, its layout, logic, and presentation are proprietary to Dingfelder Enterprises. © Dingfelder Enterprises. All rights reserved.
+  </div>
+</section>
+
+<style>
+:root{
+  --bg:#0b0d10; --panel:#141820;
+  --ink:#e7ebf7; --ink-dim:#a1abc7;
+  --stroke:#252a38;
+  --tile-img:168px;          /* bigger portraits without cropping */
+  --tile-pad:14px;
+  --tile-radius:14px;
+  --tile-minh:270px;         /* keeps cards tall enough for big icons */
+}
+html,body{background:var(--bg);color:var(--ink)}
+section.container{color:var(--ink);max-width:1200px;margin:0 auto;padding:20px}
+.page-title{margin-bottom:.25rem}
+.page-sub{color:var(--ink-dim);margin:0 0 1rem}
+.section{display:block;width:100%;margin:18px 0 8px}
+.section-title{margin:0 0 8px 2px;font-weight:700;color:var(--ink)}
+.grid{
+  display:grid;
+  gap:16px;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  align-items:stretch;
+}
+@media (max-width:640px){ .grid{ grid-template-columns:1fr }}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--stroke);
+  border-radius:var(--tile-radius);
+}
+.card a{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  text-decoration:none;
+  color:inherit;
+  padding:var(--tile-pad);
+  min-height:var(--tile-minh);
+  text-align:center;
+}
+
+.card-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  margin:6px 0 10px;
+  min-height:calc(var(--tile-img) + 10px);
+}
+.card-icon img{
+  width:auto;
+  max-width:100%;
+  height:var(--tile-img);     /* fixed height => no cropping via object-fit */
+  max-height:var(--tile-img);
+  object-fit:contain;         /* key: show full portrait (Otto/Volta/etc) */
+  display:block;
+  margin:0 auto;
+}
+
+.card-body{width:100%}
+.card-title{font-weight:700;margin-bottom:2px;color:var(--ink);display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+.card-sub{color:var(--ink-dim);font-size:.9rem;line-height:1.2}
+
+.badge{
+  font-size:.70rem;
+  padding:.15rem .4rem;
+  border-radius:.4rem;
+  border:1px solid #2b5cff;
+  line-height:1;
+}
+.badge.draft{color:#ffb020;border-color:#ffb020}
+.badge.lock{color:#ff3b3b;border-color:#ff3b3b}
+
+.notice{margin-top:14px;color:var(--ink-dim);font-size:.75rem}
+</style>
+
+<script>
+/**
+ * IMPORTANT:
+ * - This version does NOT fetch bots.json (avoids GoDaddy preview blocks).
+ * - Netlify hosts the bot pages + icons. GoDaddy just renders this grid.
+ */
+const BASES = [
+  "https://bots.dingfelder.co",          // primary
+  "https://discipline-bots.netlify.app"  // fallback
+];
+
+// lock the build label
+const BUILD = "2.137";
+
+// cache-bust for ICONS + BOT LINKS
+const cb = Date.now();
+
+function iconTag(slug, alt){
+  const tries = BASES.map(b => `${b}/assets/${slug}.png?cb=${cb}`);
+  const last = tries[tries.length - 1];
+  const first = tries[0];
+  return `<img src="${first}" alt="${alt} icon" loading="lazy"
+    onerror="this.onerror=null; this.src='${last}'">`;
+}
+
+function navTop(url){
+  try { window.top.location.href = url; }
+  catch(e){ window.location.href = url; }
+}
+
+function hrefFor(slug){
+  return `${BASES[0]}/${slug}.html?cb=${cb}`;
+}
+
+const BOTS = [
+  {"slug":"alan","name":"Alan™","note":"Oilfield • forging • portable","group":"Crew","status":"prod","tag":"LOCK"},
+  {"slug":"arcie","name":"Arcie™","note":"","group":"Operations","status":"prod"},
+  {"slug":"areya","name":"Areya™","note":"","group":"Operations","status":"prod"},
+  {"slug":"auto","name":"Auto™","note":"","group":"Operations","status":"prod"},
+  {"slug":"blowmold","name":"Blow-Molding Bot™","note":"Plastic blow-molding helpers","group":"Manufacturing","status":"prod"},
+  {"slug":"cap","name":"Cap™","note":"","group":"Operations","status":"prod"},
+  {"slug":"chronos","name":"Chronos™","note":"","group":"Operations","status":"prod"},
+  {"slug":"codex","name":"Codex™","note":"","group":"Operations","status":"prod"},
+  {"slug":"crucibill","name":"Crucibill™","note":"Induction melt helper","group":"Foundry","status":"prod"},
+  {"slug":"cubie","name":"Cubie™","note":"","group":"Operations","status":"prod"},
+  {"slug":"cy","name":"Cy™","note":"Hydraulics","group":"Fluids & Air","status":"prod"},
+  {"slug":"echo","name":"Echo™","note":"","group":"Operations","status":"prod"},
+  {"slug":"emt","name":"Emergency Medical Training™","note":"First aid • LZ setup","group":"Safety","status":"prod"},
+  {"slug":"fastenor","name":"Fastenor™","note":"","group":"Operations","status":"prod"},
+  {"slug":"foodpack","name":"Food Packaging Bot™","note":"Dry & liquid fills","group":"Manufacturing","status":"prod"},
+  {"slug":"gaugey","name":"Gaugey™","note":"","group":"Operations","status":"prod"},
+  {"slug":"gusty","name":"Gusty™","note":"Airflow","group":"Fluids & Air","status":"prod"},
+  {"slug":"ident","name":"ID Bot™","note":"Camera identify parts • OCR","group":"Electrical","status":"prod"},
+  {"slug":"industrialcontroller","name":"Industrialcontroller™","note":"","group":"Operations","status":"prod"},
+  {"slug":"industrialdriver","name":"Industrialdriver™","note":"","group":"Electrical","status":"prod"},
+  {"slug":"legal","name":"Legal™","note":"","group":"Operations","status":"prod"},
+  {"slug":"liftor","name":"Liftor™","note":"","group":"Operations","status":"prod"},
+  {"slug":"linear","name":"Linear™","note":"","group":"Operations","status":"prod"},
+  {"slug":"lux","name":"Lux™","note":"Lighting & photometry","group":"Electrical","status":"prod"},
+  {"slug":"mechie","name":"Mechie™","note":"","group":"Operations","status":"prod"},
+  {"slug":"millie","name":"Millie™","note":"","group":"Manufacturing","status":"prod"},
+  {"slug":"otto","name":"Otto™","note":"A.I.R.O.N. foreman • router","group":"Crew","status":"prod"},
+  {"slug":"palletizer","name":"Palletizer™","note":"","group":"Operations","status":"prod"},
+  {"slug":"patternmaker","name":"Pattern Maker Bot™","note":"Foundry patterns • shrink","group":"Foundry","status":"prod"},
+  {"slug":"puff","name":"Puff™","note":"Compressed air","group":"Fluids & Air","status":"prod"},
+  {"slug":"quecee","name":"Quecee™","note":"","group":"Operations","status":"prod"},
+  {"slug":"recycling","name":"Recycling Bot™","note":"Steel • plastics • cardboard","group":"Operations","status":"prod"},
+  {"slug":"rigger","name":"Rigger™","note":"Rigging • slings • load calc","group":"Mechanical","status":"prod"},
+  {"slug":"safety","name":"Safety™","note":"","group":"Safety","status":"prod"},
+  {"slug":"sandy","name":"Sandy™","note":"","group":"Operations","status":"prod"},
+  {"slug":"sawyer","name":"Sawyer™","note":"","group":"Manufacturing","status":"prod"},
+  {"slug":"scaley","name":"Scaley™","note":"","group":"Operations","status":"prod"},
+  {"slug":"sensoryking","name":"Sensoryking™","note":"","group":"Electrical","status":"prod"},
+  {"slug":"sentinel","name":"Sentinel™","note":"Self-defense • awareness","group":"Safety","status":"prod"},
+  {"slug":"sop","name":"SOP Bot™","note":"Generate safe SOPs","group":"Safety","status":"prod"},
+  {"slug":"thermy","name":"Thermy™","note":"","group":"Operations","status":"prod"},
+  {"slug":"underpressure","name":"UnderPressure™","note":"Boiler water control • steam • dosing","group":"Fluids & Air","status":"prod"},
+  {"slug":"vibro","name":"Vibro™","note":"","group":"Operations","status":"prod"},
+  {"slug":"volta","name":"Volta™","note":"Electrical discipline — calculators, quick checks, clean field math.","group":"Electrical","status":"prod","tag":"LOCK"},
+
+  {"slug":"walt","name":`Walt™ ${BUILD}`,"note":"Catch-all • live chat","group":"Crew","status":"prod","tag":"LOCK"},
+
+  {"slug":"wrenchford","name":"Wrenchford™","note":"Plumbing • flow","group":"Mechanical","status":"prod"},
+  {"slug":"furnace-doctor","name":"Furnace Doctor™","note":"Induction melt diagnostics • coil • power • acoustics","group":"Foundry","status":"prod"},
+  {"slug":"foundry-doctor","name":"Foundry Doctor™","note":"Charge chemistry • inoculation • defects • process checks","group":"Foundry","status":"prod"}
+];
+
+const groups = ["Crew","Fluids & Air","Mechanical","Electrical","Safety","Operations","Manufacturing","Foundry"];
+
+function badgeHTML(b){
+  if(b.status === "draft") return `<span class="badge draft">DRAFT</span>`;
+  if(b.tag === "LOCK") return `<span class="badge lock">LOCK</span>`;
+  return "";
+}
+
+function card(b){
+  const href = hrefFor(b.slug);
+  const badge = badgeHTML(b);
+  return `
+    <div class="card">
+      <a href="${href}" target="_top" rel="noopener"
+         onclick="event.preventDefault(); navTop('${href}')">
+        <div class="card-icon">${iconTag(b.slug, b.name)}</div>
+        <div class="card-body">
+          <div class="card-title">${b.name} ${badge}</div>
+          <div class="card-sub">${b.note || ""}</div>
+        </div>
+      </a>
+    </div>`;
+}
+
+function section(title, items){
+  if(!items.length) return "";
+  return `
+    <div class="section">
+      <h2 class="section-title">${title}</h2>
+      <div class="grid">${items.map(card).join("")}</div>
+    </div>`;
+}
+
+const container = document.getElementById("bot-dir");
+const MODE = container.dataset.mode; // 'prod' or 'all'
+const visible = BOTS.filter(b => MODE === "all" ? true : b.status === "prod");
+container.innerHTML = groups.map(g => section(g, visible.filter(b => b.group === g))).join("");
+</script>

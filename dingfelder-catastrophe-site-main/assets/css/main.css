@@ -1,0 +1,117 @@
+
+:root{
+  --bg:#05070b;
+  --panel:#0b1118;
+  --ink:#e6ebf4;
+  --muted:#a1abc7;
+  --stroke:#1f2933;
+  --accent:#ef4444;
+  --accent2:#2dd4bf;
+  --gold:#fbbf24;
+  --max:1180px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
+a{color:#7dd3fc;text-decoration:none}
+a:hover{text-decoration:underline}
+
+.de-wrap{background:var(--bg);min-height:100vh}
+.de-top-strip{background:rgba(0,0,0,.65);color:#fff;text-align:center;font-size:14px;padding:10px 12px}
+.de-nav{
+  position:sticky;top:0;z-index:9999;
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.de-nav-inner{
+  max-width:var(--max); margin:0 auto; padding:14px 18px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.de-brand{display:flex; align-items:center; gap:12px}
+.de-brand img{width:72px;height:auto;display:block}
+.de-menu{display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:flex-end}
+.de-menu a{color:#e6ebf4;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;opacity:.95}
+.de-menu a:hover{opacity:1}
+.de-hero{
+  position:relative;
+  height:min(76vh,720px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.de-hero video, .de-hero .de-hero-fallback{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; filter:contrast(1.05) saturate(1.05);
+}
+.de-hero::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.62));
+}
+.de-hero-inner{
+  position:relative; z-index:1;
+  max-width:var(--max); width:100%;
+  padding:0 18px;
+  text-align:center;
+}
+.de-hero h1{
+  margin:0 0 18px;
+  font-size:clamp(34px,4.8vw,64px);
+  font-weight:900;
+  letter-spacing:.02em;
+  text-shadow:0 12px 40px rgba(0,0,0,.6);
+}
+.de-hero-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+.de-btn{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.92);
+  color:#0b1118;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:14px 22px;
+  border-radius:14px;
+  cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  box-shadow:0 12px 26px rgba(0,0,0,.35);
+}
+.de-btn.secondary{background:rgba(255,255,255,.86)}
+.de-phone{margin-top:18px;color:#fff;font-weight:800;font-size:18px}
+
+.de-anchor{
+  height:0; margin:0; padding:0;
+  scroll-margin-top:96px;
+}
+.de-section-title{
+  max-width:var(--max); margin:0 auto;
+  padding:44px 18px 10px;
+  text-align:center;
+  color:var(--accent);
+  font-weight:900;
+  font-size:clamp(26px,3vw,46px);
+  letter-spacing:.02em;
+}
+.de-divider{
+  width:76px;height:2px;background:rgba(255,255,255,.12);
+  margin:10px auto 0;border-radius:999px;
+}
+
+.de-footer{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:42px 18px 54px;
+  color:var(--muted);
+  font-size:12px;
+  text-align:center;
+}
+.de-footer .links{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin:10px 0 16px}
+.de-footer .links a{color:#dbe7ff}
+.de-footer small{display:block;opacity:.85}
+
+@media (max-width:720px){
+  .de-brand img{width:56px}
+  .de-menu{gap:14px}
+}
