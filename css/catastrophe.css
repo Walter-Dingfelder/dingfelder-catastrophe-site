@@ -1811,3 +1811,194 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   Vendor RFQ page — C.A.T.A.S.T.R.O.P.H.E. tablet production
+   ========================================================= */
+.rfq-page {
+  overflow-x: hidden;
+}
+
+.rfq-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.95fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.rfq-hero-copy,
+.rfq-hero-visual {
+  min-width: 0;
+}
+
+.rfq-hero .hero-copy h1 {
+  font-size: clamp(2rem, 4vw, 4.2rem);
+}
+
+.rfq-hero-visual img {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: contain;
+  background: rgba(0,0,0,0.20);
+}
+
+.rfq-card-grid {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.rfq-card-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.rfq-card-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.rfq-card-grid.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+.rfq-info-card h3,
+.rfq-requirement-card h3 {
+  margin: 0 0 10px;
+  color: #fff4db;
+}
+
+.rfq-info-card p,
+.rfq-requirement-card p,
+.rfq-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.rfq-requirement-card {
+  border: 1px solid rgba(111,211,255,0.18);
+  background:
+    radial-gradient(circle at top left, rgba(111,211,255,0.06), transparent 28%),
+    rgba(255,255,255,0.035);
+  border-radius: 18px;
+  padding: 20px;
+  min-width: 0;
+}
+
+.rfq-requirement-card:nth-child(1),
+.rfq-requirement-card:nth-child(4) {
+  border-color: rgba(245,159,40,0.34);
+  background:
+    radial-gradient(circle at top left, rgba(245,159,40,0.12), transparent 30%),
+    rgba(255,255,255,0.035);
+}
+
+.rfq-icon {
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: rgba(245,159,40,0.12);
+  border: 1px solid rgba(245,159,40,0.30);
+  color: var(--gold);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+}
+
+.rfq-split-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.quantity-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.quantity-grid div {
+  min-width: 0;
+  border-radius: 18px;
+  border: 1px solid rgba(111,211,255,0.18);
+  background: rgba(4,10,16,0.55);
+  padding: 18px 14px;
+  text-align: center;
+}
+
+.quantity-grid strong {
+  display: block;
+  color: var(--gold);
+  font-size: clamp(1.55rem, 3vw, 2.3rem);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.quantity-grid span {
+  display: block;
+  color: var(--muted);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.rfq-list-grid label {
+  display: block;
+  min-height: auto;
+  padding: 13px 14px;
+  color: #eef4fb;
+}
+
+.rfq-vendor-form input[type="file"] {
+  padding: 11px;
+}
+
+.rfq-vendor-form input[type="file"]::file-selector-button {
+  border: 0;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #081018;
+  font-weight: 800;
+  padding: 10px 14px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.rfq-thanks {
+  min-height: 70vh;
+  align-items: center;
+}
+
+@media (max-width: 1180px) {
+  .rfq-card-grid.five,
+  .quantity-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .rfq-card-grid.four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .rfq-hero,
+  .rfq-card-grid.three,
+  .rfq-split-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rfq-hero-visual img {
+    min-height: 0;
+    height: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .rfq-card-grid.five,
+  .rfq-card-grid.four,
+  .quantity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rfq-hero .hero-copy h1 {
+    font-size: clamp(1.65rem, 8vw, 2.4rem);
+  }
+}
+
+/* RFQ header safety: allow added vendor CTA to wrap cleanly */
+.site-header-actions { flex-wrap: wrap; }
